@@ -10,6 +10,11 @@
 
 	{% if current_user.is_authenticated %}
 	  	<h2 class="ui header">Hi {{ current_user.name }}!</h2>
+	  	<h2 class="ui header">Your balance is: {{ balance }} Satoshis</h2>
+	  	<h2 class="ui header">Your address is: {{ address }}</h2>
+                <form action="/wallet" method="post">
+		  <button type="submit" name="generateAddress">Generate Address</button>
+		</form>
 	{% endif %}
 
 {% endblock %}

@@ -1,7 +1,8 @@
 from functools import wraps
-from flask import render_template, jsonify, session, redirect
+from flask import render_template, jsonify, session, redirect, request, json
 from app import app
 import random
+from app.toolbox.multisig_wallet import multisig_wallet
 
 def login_required(func):
     @wraps(func)
@@ -24,10 +25,27 @@ def index():
 def map():
     return render_template('map.html', title='Map')
 
-@app.route('/wallet')
+@app.route('/wallet', methods=['GET', 'POST'])
 @login_required
 def wallet():
-    return render_template('wallet.html', title='Wallet')
+    if request.method == 'GET':
+        username = session['email']    
+        address = multisig_wallet.generate_address(str(username))    
+        balance = multisig_wallet.get_balance(str(username))
+        return render_template('wallet.html', title='Wallet', address=address, balance=balance)
+
+    if request.method == 'POST':
+        username = session['email']    
+        address = multisig_wallet.generate_address(str(username))    
+        balance = multisig_wallet.get_balance(str(username))
+        return render_template('wallet.html', title='Wallet', address=address, balance=balance)
+
+@app.route('/wallet/generateAddress', methods=['GET'])
+@login_required
+def wallet_generateAddress():
+    username = session['email']    
+    address = multisig_wallet.generate_address(str(username))
+    return jsonify({'address': address})
 
 @app.route('/map/refresh', methods=['POST'])
 @login_required
