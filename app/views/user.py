@@ -1,5 +1,5 @@
 from flask import (Blueprint, render_template, redirect, url_for,
-                   abort, flash)
+                   abort, flash, session)
 from flask.ext.login import login_user, logout_user, login_required
 from itsdangerous import URLSafeTimedSerializer
 from app import app, models, db
@@ -13,9 +13,12 @@ ts = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 # Create a user blueprint
 userbp = Blueprint('userbp', __name__, url_prefix='/user')
 
-
 @userbp.route('/signup', methods=['GET', 'POST'])
 def signup():
+    # See if user is already logged in
+    if 'email' in session:
+        return redirect('/')
+
     form = user_forms.SignUp()
     if form.validate_on_submit():
         # Create a user who hasn't validated his email address
@@ -45,6 +48,7 @@ def signup():
         email.send(user.email, subject, html)
         # Send back to the home page
         flash('Check your emails to confirm your email address.', 'positive')
+        session['email'] = form.email.data
         return redirect(url_for('index'))
     return render_template('user/signup.html', form=form, title='Sign up')
 
@@ -70,6 +74,10 @@ def confirm(token):
 
 @userbp.route('/signin', methods=['GET', 'POST'])
 def signin():
+    # See if user is already logged in
+    if 'email' in session:
+        return redirect('/')
+
     form = user_forms.Login()
     if form.validate_on_submit():
         user = models.User.query.filter_by(email=form.email.data).first()
@@ -79,6 +87,7 @@ def signin():
             if user.check_password(form.password.data):
                 login_user(user)
                 # Send back to the home page
+                session['email'] = form.email.data
                 flash('Succesfully signed in.', 'positive')
                 return redirect(url_for('index'))
             else:
@@ -92,6 +101,7 @@ def signin():
 
 @userbp.route('/signout')
 def signout():
+    session.pop('email', None)
     logout_user()
     flash('Succesfully signed out.', 'positive')
     return redirect(url_for('index'))
