@@ -49,3 +49,9 @@ body {
 .error-box {
    margin-top: 8%;
 }
+
+/* Footer Icon */
+
+.footer-icon {
+  width: 14px;
+}

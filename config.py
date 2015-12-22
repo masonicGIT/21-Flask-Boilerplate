@@ -3,7 +3,7 @@ DEBUG = True
 # Secret key for generating tokens
 SECRET_KEY = 'houdini'
 # Admin credentials
-ADMIN_CREDENTIALS = ('admin', 'pa$$word')
+ADMIN_CREDENTIALS = ('admin', 'password')
 # Database choice
 SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
 SQLALCHEMY_TRACK_MODIFICATIONS = True

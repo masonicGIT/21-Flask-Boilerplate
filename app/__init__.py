@@ -57,6 +57,6 @@ class ModelView(ModelView):
 
 # Users
 admin.add_view(ModelView(User, db.session))
-# Static files
-path = op.join(op.dirname(__file__), 'static')
-admin.add_view(FileAdmin(path, '/static/', name='Static'))
+
+
+
