@@ -6,16 +6,16 @@ import random
 def login_required(func):
     @wraps(func)
     def func_wrapper(*args, **kwargs):
-        print 'test'
         if 'email' in session:
             print session['email']
         else:
-            return redirect('/')
+            return redirect('/user/signin')
         return func(*args, **kwargs)
     return func_wrapper
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
     return render_template('index.html', title='Home')
 
