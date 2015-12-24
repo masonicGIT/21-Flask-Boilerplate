@@ -1,5 +1,7 @@
 # DEBUG has to be to False in a production enrironment for security reasons
 DEBUG = True
+# BitGo wallet token for IP XX.XXX.XX, dispense an access token at www.bitgo.com and set it here
+ACCESS_TOKEN = ''
 # Secret key for generating tokens
 SECRET_KEY = 'houdini'
 # Admin credentials

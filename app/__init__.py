@@ -1,9 +1,27 @@
 from flask import Flask
+import sys, requests, json
 
 app = Flask(__name__)
 
 # Setup the app with the config.py file
 app.config.from_object('config')
+
+# Check wallet status with BitGo
+token = app.config['ACCESS_TOKEN']
+
+try:
+    r = requests.get('http://localhost:3080/api/v1/user/session', headers = {'Authorization': 'Bearer ' + token,'Content-Type': 'application/json'}, data={})
+    if (r.status_code == 404):
+        print('Your BitGo Express access token has expired or is invalid for this IP address')
+        print('You may acquire a new one at https://www.bitgo.com')
+        print('The in-app wallet will remain inactive until a new access token is set')
+    if (r.status_code == 200):
+        print('BitGo Express running...')
+
+except:
+    print('BitGo Express is not currently running on your machine')
+    print('To enable the in-app wallet please navigate to goo.gl/AaU8Rp for installation instructions')
+    print('and set your token in config.py')
 
 # Setup the database
 from flask.ext.sqlalchemy import SQLAlchemy

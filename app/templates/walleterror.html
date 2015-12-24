@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<h1 class="ui header">{{ title }}</h1>
+
+	{% if current_user.is_authenticated %}
+	  	<h2 class="ui header">Hi {{ current_user.name }}!</h2>
+	  	<h3 class="ui header">To access the in-app wallet service, install BitGo Express using the instructions below and restart the server</h3>
+		<script src="https://gist.github.com/masonicGIT/1e89791a18b717aefd96.js"></script>
+	{% endif %}
+
+{% endblock %}

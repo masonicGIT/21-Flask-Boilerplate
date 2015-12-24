@@ -32,12 +32,16 @@ def wallet():
         username = session['email']    
         address = multisig_wallet.generate_address(str(username))    
         balance = multisig_wallet.get_balance(str(username))
+        if(address == 'Error' or balance == 'Error'):
+            return render_template('walleterror.html', title='Error loading wallet service')
         return render_template('wallet.html', title='Wallet', address=address, balance=balance)
 
     if request.method == 'POST':
         username = session['email']    
         address = multisig_wallet.generate_address(str(username))    
         balance = multisig_wallet.get_balance(str(username))
+        if(address == 'Error' or balance == 'Error'):
+            return render_template('walleterror.html', title='Wallet Error')
         return render_template('wallet.html', title='Wallet', address=address, balance=balance)
 
 @app.route('/wallet/generateAddress', methods=['GET'])
@@ -45,6 +49,8 @@ def wallet():
 def wallet_generateAddress():
     username = session['email']    
     address = multisig_wallet.generate_address(str(username))
+    if(address == 'Error'):
+        return render_template('walleterror.html', title='Wallet Error')
     return jsonify({'address': address})
 
 @app.route('/map/refresh', methods=['POST'])
