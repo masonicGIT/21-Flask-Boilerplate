@@ -8,7 +8,7 @@ def login_required(func):
     @wraps(func)
     def func_wrapper(*args, **kwargs):
         if 'email' in session:
-            print session['email']
+            print(session['email'])
         else:
             return redirect('/user/signin')
         return func(*args, **kwargs)

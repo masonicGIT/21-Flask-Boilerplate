@@ -55,14 +55,33 @@ def load_user(email):
 # Setup the admin interface
 from flask import request, Response
 from werkzeug.exceptions import HTTPException
-from flask_admin import Admin
+from flask_admin import Admin, expose, BaseView
 from flask.ext.admin.contrib.sqla import ModelView
 from flask.ext.login import LoginManager
 from flask.ext.admin.contrib.fileadmin import FileAdmin
-import os.path as op
 
+# Setup the dashboard
+from two1.commands import status
+from two1.commands import log
+from two1.lib.server import rest_client
+from two1.commands.config import Config
+from two1.commands.config import TWO1_HOST
+
+conf = Config()
+host = TWO1_HOST
+client = rest_client.TwentyOneRestClient(host, conf.machine_auth, conf.username)
 admin = Admin(app, name='Admin', template_mode='bootstrap3')
 
+class DashboardView(BaseView):
+    @expose('/', methods=('GET', 'POST'))
+    def dashboard(self):
+        status_mining = status.status_mining(conf, client)
+        status_wallet = status.status_wallet(conf, client)
+        status_account = status.status_account(conf)
+        status_earnings = client.get_earnings()
+        print(status_earnings)
+        return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings)
+    
 class ModelView(ModelView):
 
     def is_accessible(self):
@@ -75,6 +94,7 @@ class ModelView(ModelView):
 
 # Users
 admin.add_view(ModelView(User, db.session))
+admin.add_view(DashboardView(name='Dashboard', endpoint='dashboard'))
 
 
 
