@@ -5,7 +5,6 @@ from itsdangerous import URLSafeTimedSerializer
 from app import app, models, db
 from app.forms import user as user_forms
 from app.toolbox import email
-from app.toolbox.multisig_wallet import multisig_wallet
 
 # Serializer for generating random tokens
 ts = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -33,8 +32,7 @@ def signup():
         # Insert the user in the database
         db.session.add(user)
         db.session.commit()
-        # Create multisig wallet for user
-        multisig_wallet.create_wallet(form.email.data, form.password.data)
+
         # Subject of the confirmation email
         subject = 'Please confirm your email address.'
         # Generate a random token

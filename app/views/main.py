@@ -28,20 +28,19 @@ def map():
 @app.route('/wallet', methods=['GET', 'POST'])
 @login_required
 def wallet():
+
+    username = session['email']    
+
+    address = multisig_wallet.generate_address(str(username))    
+    balance = multisig_wallet.get_balance(str(username))
+
+    if(address == None or balance == None):
+        return render_template('walleterror.html', title='Error loading wallet service')
+
     if request.method == 'GET':
-        username = session['email']    
-        address = multisig_wallet.generate_address(str(username))    
-        balance = multisig_wallet.get_balance(str(username))
-        if(address == 'Error' or balance == 'Error'):
-            return render_template('walleterror.html', title='Error loading wallet service')
         return render_template('wallet.html', title='Wallet', address=address, balance=balance)
 
     if request.method == 'POST':
-        username = session['email']    
-        address = multisig_wallet.generate_address(str(username))    
-        balance = multisig_wallet.get_balance(str(username))
-        if(address == 'Error' or balance == 'Error'):
-            return render_template('walleterror.html', title='Wallet Error')
         return render_template('wallet.html', title='Wallet', address=address, balance=balance)
 
 @app.route('/wallet/generateAddress', methods=['GET'])
