@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import render_template, jsonify, session, redirect, request, json
-from app import app
+from app import app, models
 import random
 from app.toolbox.multisig_wallet import multisig_wallet
 
@@ -28,7 +28,6 @@ def map():
 @app.route('/wallet', methods=['GET', 'POST'])
 @login_required
 def wallet():
-
     username = session['email']    
 
     address = multisig_wallet.generate_address(str(username))    

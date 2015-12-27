@@ -45,6 +45,7 @@ class multisig_wallet(object):
             r = requests.post('http://localhost:3080/api/v1/wallets/simplecreate',
                               headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN,'content-type': 'application/json'},
                               data = payload)
+        
         except:
             print('There was an error retrieving your wallet')
 
@@ -102,6 +103,7 @@ class multisig_wallet(object):
         try:
             walletId
         except NameError:
+
             print('BitGo Express: User does not exist')            
             print('BitGo Express: Checking API availability..')
             serviceOk = multisig_wallet.session()
@@ -145,6 +147,7 @@ class multisig_wallet(object):
         try:
             walletId
         except NameError:
+
             print('BitGo Express: User does not exist')            
             print('BitGo Express: Checking API availability..')
             serviceOk = multisig_wallet.session()
