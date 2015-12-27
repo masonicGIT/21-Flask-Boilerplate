@@ -6,15 +6,14 @@ This provides a boilerplate template to provide 21 devs with the infrastructure 
 
 ## 21 Specific Features
 
-- [ ] Plugging in the two1 lib to provide access to cli functionality
-- [ ] Admin panel to provide information on 21 diagnostics
+- [x] Admin panel to provide information on 21 diagnostics
 - [x] Per user, individually provisioned wallets
 - [ ] HD child address generation with QR code support
 - [ ] Wallet send flow
 - [ ] Public listing of 402 endpoints (nice to have)
 - [ ] Public access to 402 endpoint for each user, will be centralized through 21-user for now (nice ot have)
-- [ ] Admin panel accessible by the 21 owner
-- [ ] All information available through 21-cli displayable for admins (flush, mine, etc.)
+- [x] Admin panel accessible by the 21 owner
+- [x] All information available through 21-cli displayable for admins
 - [ ] All functionality available with the 21-cli available to admins (flush, mine, etc.)
 
 Please feel free to fill in anything else that you feel would be useful or to create an issue with your suggestion, with an emphasis on tools that have broad use cases
@@ -59,13 +58,13 @@ Please feel free to fill in anything else that you feel would be useful or to cr
 
 ## Structure
 
-I did what most people recommend for the application's structure. Basically, everything is contained in the ``app/`` folder.
+Everything is contained in the ``app/`` folder.
 
-- There you have the classic ``static/`` and ``templates/`` folders. The ``templates/`` folder contains macros, error views and a common layout.
-- I added a ``views/`` folder to separate the user and the website logic, which could be extended to the the admin views.
-- The same goes for the ``forms/`` folder, as the project grows it will be useful to split the WTForms code into separate files.
+- There you have the ``static/`` and ``templates/`` folders. The ``templates/`` folder contains macros, error views and a common layout.
+- The ``views/`` folder separates the user and the website logic, which can be extended to the the admin views.
+- The same goes for the ``forms/`` folder.
 - The ``models.py`` script contains the SQLAlchemy code, for the while it only contains the logic for a ``users`` table.
-- The ``toolbox/`` folder is a personal choice, in it I keep all the other code the application will need.
+- The ``toolbox/`` folder is contains generic utils
 
 
 ## Setup
@@ -107,9 +106,9 @@ python run.py
 
 ## Configuration
 
-The goal is to keep most of the application's configuration in a single file called ``config.py``. The one that is included is basic and yet it covers most of the important stuff.
+Configuration paramaters can be set in ``config.py``. Please change the default params if using in a production environment.
 
-there is a working Gmail account to confirm user email addresses and reset user passwords, although in production you should't include the file if you push to GitHub because people can see it. The same goes for API keys, you should keep them secret. You can read more about secret configuration files [here](https://exploreflask.com/configuration.html).
+There is a working Gmail account to confirm user email addresses and reset user passwords. The same goes for API keys, you should keep them secret. You can read more about secret configuration files [here](https://exploreflask.com/configuration.html).
 
 Read [this](http://flask.pocoo.org/docs/0.10/config/) for information on the possible configuration options.
 
