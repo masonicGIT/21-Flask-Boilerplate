@@ -1,7 +1,5 @@
 # Flask 21 Boilerplate
 
-![License](http://img.shields.io/:license-mit-blue.svg)
-
 This provides a boilerplate template to provide 21 devs with the infrastructure necessary to develop consumer or public facing apps. 
 
 ## 21 Specific Features
