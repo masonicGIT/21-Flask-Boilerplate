@@ -71,17 +71,22 @@ Everything is contained in the ``app/`` folder.
 
 - Install the required libraries.
 
-	``pip install -r requirements.txt``
+	``pip3 install -r requirements.txt``
 
 - Create the database.
 
-	``python createdb.py``
+	``python3 createdb.py``
 
 - Run the application.
 
-	``python run.py``
+	``python3 run.py``
 
 - Navigate to ``localhost:5000``.
+
+- To access the admin panel and the 21 dashboard navigate to ``localhost:5000/admin``. 
+
+
+
 
 
 ### Virtual environment
