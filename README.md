@@ -11,7 +11,7 @@ This provides a boilerplate template to provide 21 devs with the infrastructure 
 - [ ] HD child address generation with QR code support
 - [ ] Wallet send flow
 - [ ] Public listing of 402 endpoints (nice to have)
-- [ ] Public access to 402 endpoint for each user, will be centralized through 21-user for now (nice ot have)
+- [ ] Public access to 402 endpoint for each user, will be centralized through 21-user for now (nice to have)
 - [x] Admin panel accessible by the 21 owner
 - [x] All information available through 21-cli displayable for admins
 - [ ] All functionality available with the 21-cli available to admins (flush, mine, etc.)
