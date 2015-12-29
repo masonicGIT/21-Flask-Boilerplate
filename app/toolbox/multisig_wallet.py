@@ -39,6 +39,7 @@ class multisig_wallet(object):
 
     @staticmethod
     def create_wallet(username, passphrase):
+        print(passphrase)
         ## Create a new wallet using BitGo Express 
         payload = json.dumps({ "passphrase": passphrase, "label": username })
         try:
@@ -78,7 +79,7 @@ class multisig_wallet(object):
             print('Wallet ID: ' + walletId + '\n')
             print('Your wallet config file can be found at: ' + DEFAULT_WALLET_PATH)
 
-        print('Generated address for ' + username + ':')       
+        print('Created a new wallet for: ' + username)       
         print(r.json()['wallet']['id'])
         return r.json()['wallet']['id']
         
@@ -120,8 +121,20 @@ class multisig_wallet(object):
                               headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN,'content-type': 'application/json'})
 
         except:
-            print('There was an error retrieving your wallet')
+            print('There was an error with the request')
 
+        if (r.status_code == 401):
+            print('BitGo Express: User does not exist')            
+            print('BitGo Express: Checking API availability..')
+            serviceOk = multisig_wallet.session()
+            user = models.User.query.filter_by(email=username).first()
+            # Create new wallet for user using BitGo
+            if (serviceOk == True):
+                walletId = multisig_wallet.create_wallet(username, str(user.password))
+            # Return if service is down
+            if (serviceOk == False):
+                return None
+                
         print('Generated address for ' + username + ':')       
         print(r.json()['address'])
         return r.json()['address']
@@ -167,15 +180,80 @@ class multisig_wallet(object):
             print('There was an error retrieving your wallet')
 
         if (r.status_code == 401):
-            print(r.status_code)
-            print('BitGo Express: ' + r.json()['error'])
-            print('BitGo Express: ' + 'Please ensure that BitGo Express is running in prod with a')
-            print('BitGo Express: ' + 'valid access token from www.bitgo.com')
-            return False
+            print('BitGo Express: User does not exist')            
+            print('BitGo Express: Checking API availability..')
+            serviceOk = multisig_wallet.session()
+            user = models.User.query.filter_by(email=username).first()
+            # Create new wallet for user using BitGo
+            if (serviceOk == True):
+                walletId = multisig_wallet.create_wallet(username, str(user.password))
+            # Return if service is down
+            if (serviceOk == False):
+                return None
 
         print('Balance for ' + username + ' is: ')
         print(r.json()['balance'])
         return(r.json()['balance'])
+
+    @staticmethod        
+    def send_bitcoin(sender, address, amount, passphrase):
+        print('Sending Bitcoin')
+        if (type(amount) != int):
+            return False
+        with open(DEFAULT_WALLET_PATH, 'r') as wallet:
+          data = json.loads(wallet.read())
+        for user in data:
+          try:
+            if user[sender]:
+              print('Wallet found')
+              walletId = user[sender]['walletId']
+          except:
+            print('Loading wallet..')
+
+        ## Ensure that the user exists
+        try:
+            walletId
+        except NameError:
+
+            print('BitGo Express: User does not exist')            
+            print('BitGo Express: Checking API availability..')
+            serviceOk = multisig_wallet.session()
+            user = models.User.query.filter_by(email=username).first()
+            # Create new wallet for user using BitGo
+            if (serviceOk == True):
+                multisig_wallet.create_wallet(username, str(user.password))
+            # Return if service is down
+            if (serviceOk == False):
+                return None
+            
+        payload = json.dumps({"address": address, "amount": int(amount), "walletPassphrase": passphrase})
+        #use the sender username to look up the sender id
+        try:
+            r = requests.post('http://localhost:3080/api/v1/wallet/' + walletId + '/sendcoins',
+                              headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN,'content-type': 'application/json'},
+                              data = payload)
+        except:
+            print('Please ensure that you have BitGo Express running on your local machine')
+
+        if (r.status_code == 401):
+            print('BitGo Express: User does not exist')            
+            print('BitGo Express: Checking API availability..')
+            serviceOk = multisig_wallet.session()
+            user = models.User.query.filter_by(email=username).first()
+            # Create new wallet for user using BitGo
+            if (serviceOk == True):
+                walletId = multisig_wallet.create_wallet(username, str(user.password))
+            # Return if service is down
+            if (serviceOk == False):
+                return None
+        # Insufficient funds, potentially low amount with high fees
+        if (r.status_code == 500):
+            return r.json()
+        # Below the dust threshold
+        if (r.status_code == 400):
+            return r.json()
+
+        return str(r.json()['hash'])
 
     @staticmethod
     def set_webhook(username, url, confirms):
