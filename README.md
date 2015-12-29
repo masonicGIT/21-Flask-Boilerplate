@@ -6,8 +6,9 @@ This provides a boilerplate template to provide 21 devs with the infrastructure 
 
 - [x] Admin panel to provide information on 21 diagnostics
 - [x] Per user, individually provisioned wallets
-- [ ] HD child address generation with QR code support
-- [ ] Wallet send flow
+- [x] HD child address generation
+- [ ] QR Code support
+- [x] Wallet send flow
 - [ ] Public listing of 402 endpoints (nice to have)
 - [ ] Public access to 402 endpoint for each user, will be centralized through 21-user for now (nice to have)
 - [x] Admin panel accessible by the 21 owner
@@ -19,6 +20,7 @@ Please feel free to fill in anything else that you feel would be useful or to cr
 ## Generic Boilerplate Features
 
 - [x] User account sign up, sign in, password reset, all through asynchronous email confirmation.
+- [ ] Social media logins (Twitter, Facebook, Github) 
 - [x] Form generation.
 - [x] Error handling.
 - [x] HTML macros and layout file.
