@@ -63,6 +63,8 @@ from flask.ext.admin.contrib.fileadmin import FileAdmin
 # Setup the dashboard
 from two1.commands import status
 from two1.commands import log
+from two1.commands import flush
+from two1.commands import mine
 from two1.lib.server import rest_client
 from two1.commands.config import Config
 from two1.commands.config import TWO1_HOST
@@ -82,6 +84,22 @@ class DashboardView(BaseView):
         print(status_earnings)
         return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings)
     
+    @expose('/flushEarnings/', methods=('GET', 'POST'))
+    def flushEarnings(self):
+        pre_flush_wallet = status.status_wallet(conf, client)
+        flush_response = flush.flush_earnings(conf, client)
+        print(flush_response)
+        status_mining = status.status_mining(conf, client)
+        status_wallet = status.status_wallet(conf, client)
+        status_account = status.status_account(conf)
+        status_earnings = client.get_earnings()
+        if pre_flush_wallet['wallet']['twentyone_balance'] != status_wallet['wallet']['twentyone_balance']:
+            flush_message = "Flush successful!"
+        else:
+            flush_message = "Flush error or less than 20000 OffChain Satoshis"
+        return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings, flush_message=flush_message)
+
+
 class ModelView(ModelView):
 
     def is_accessible(self):
@@ -95,6 +113,3 @@ class ModelView(ModelView):
 # Users
 admin.add_view(ModelView(User, db.session))
 admin.add_view(DashboardView(name='Dashboard', endpoint='dashboard'))
-
-
-
