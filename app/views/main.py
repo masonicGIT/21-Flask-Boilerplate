@@ -16,8 +16,6 @@ def login_required(func):
     return func_wrapper
 
 @app.route('/')
-@app.route('/index')
-@login_required
 def index():
     return render_template('index.html', title='Home')
 
@@ -75,7 +73,6 @@ def map_refresh():
     return jsonify({'points': points})
 
 
-@app.route('/contact')
-@login_required
-def contact():
-    return render_template('contact.html', title='Contact')
+@app.route('/test', methods=['GET'])
+def test():
+    return render_template('test.html', title='Test')

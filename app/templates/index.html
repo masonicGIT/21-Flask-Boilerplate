@@ -6,10 +6,103 @@
 
 {% block content %}
 
-	<h1 class="ui header">{{ title }}</h1>
 
-	{% if current_user.is_authenticated %}
-	  	<h2 class="ui header">Hi {{ current_user.name }}!</h2>
-	{% endif %}
+<!-- Page Contents -->
+<div class="pusher">
+  <div class="ui inverted vertical masthead center aligned segment">
+    <div class="ui text">
+      <h1 class="ui inverted header">
+        Image a Company
+      </h1>
+      <h2>Built on the 21 Bitcoin Computer</h2>
+      <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
+    </div>
+  </div>
+
+  <div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+      <div class="row">
+	<div class="ui page grid">
+          <div class="eight wide column middle aligned">
+            <h3 class="ui header">Inspire a new era of commerce</h3>
+	    <div>
+              <p>Help lead the way and inspire the future of the machine payable web. Dream, build inspire.</p>
+	    </div>
+            <h3 class="ui header">Projects that make a difference</h3>
+            <p>Be part of the next generation of entrepreneurs revolutionizing the way machines interact in the Bitcoin powered digital economy.</p>
+          </div>
+	  
+          <div class="six wide right floated column">
+            <img src="static/img/white-image.png" class="ui large bordered rounded image">
+          </div>
+	  <div class="sixteen wide column">
+	    <div class="center aligned row">
+	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Build Now</a>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="ui vertical stripe quote segment">
+    <div class="ui equal width stackable internally celled grid">
+      <div class="center aligned row">
+        <div class="column">
+          <h3>"The 21 chip adds a whole new dimension to bitcoin's potential utility."</h3>
+          <p>
+            <img src="static/img/larry_summers.jpg" class="ui avatar image"> <b>Larry Summers</b> - Harvard
+          </p>
+	</div>
+        <div class="column">
+          <h3>"Are you a developer? Then you need to get a 21 Computer."</h3>
+          <p>
+            <img src="static/img/ben_horowitz.jpg" class="ui avatar image"> <b>Ben horowitz</b> - Andreessen Horowitz
+          </p>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <div class="ui vertical stripe segment">
+    <div class="ui text container">
+      <div class="center aligned column">
+	<h3 class="ui header">The Bitcoin Computer is here</h3>
+	<p>The possibilites are endless, the Bitcoin computer is helping to spur innovation in payments. Check out some of the featured projects below.</p>
+	<a class="ui large button">Read More</a>
+      </div>
+      <h4 class="ui horizontal header divider">
+	<a href="#">Featured Projects</a>
+      </h4>
+    </div>
+    <div class="ui vertical quote segment">
+      <div class="ui equal width stackable internally grid">
+	<div class="center aligned row">
+          <div class="column">
+	    <div class="github-card" data-github="jgarzik/playground21" data-width="400" data-height="" data-theme="default"></div>
+	    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+	  </div>
+          <div class="column">
+	    <div class="github-card" data-github="joepickrell/phenopredict21" data-width="400" data-height="" data-theme="default"></div>
+	    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+          </div>
+	</div>
+	<div class="center aligned row">
+          <div class="column">
+	    <div class="github-card" data-github="justinguy/21-retweet" data-width="400" data-height="" data-theme="default"></div>
+	    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+	  </div>
+          <div class="column">
+	    <div class="github-card" data-github="aantonop/wifiportal21" data-width="400" data-height="" data-theme="default"></div>
+	    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+          </div>
+	</div>
+      </div>
+    </div> 
+  </div>
+</div>
+
 
 {% endblock %}
