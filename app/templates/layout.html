@@ -7,11 +7,12 @@
       {% block head %}
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-      <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
       <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
       <!-- jQuery -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+      <!-- Semantic Library -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
       <!-- Semantic CSS Components -->
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/components/reset.min.css"/>
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/components/menu.min.css"/>
@@ -59,34 +60,34 @@
       </script>
     </div>
   </head>
-    <!-- Browser tab name -->
-    <title>{{ title }}</title>
-    <!-- Navbar -->
-    <div class="ui large attached inverted pointing menu">
-      {{ m.nav_link('index', 'Home') }}
-      {{ m.nav_link('map', 'Map') }}
-      {{ m.nav_link('wallet', 'Wallet') }}
-      <div class="right menu">
-	<!-- User is logged in -->
-	{% if current_user.is_authenticated %}
-	<div class="item">
-	  <a class="ui inverted button" href="/user/account">{{ current_user.name }} {{ current_user.surname }}</a>
-	</div>
-	<div class="item">
-	  <a class="ui inverted button" href="/user/signout">Sign out</a>
-	</div>
-	<!-- User is not logged in -->
-	{% else %}
-	<div class="item">
-	  <a class="ui inverted button" href="/user/signin">Log in</a>
-	</div>
-	<div class="item">
-	  <a class="ui inverted button" href="/user/signup">Sign up</a>
-	</div>
-	{% endif %}
+  <!-- Browser tab name -->
+  <title>{{ title }}</title>
+  <!-- Navbar -->
+  <div class="ui large attached inverted pointing menu">
+    {{ m.nav_link('index', 'Home') }}
+    {{ m.nav_link('map', 'Map') }}
+    {{ m.nav_link('wallet', 'Wallet') }}
+    <div class="right menu">
+      <!-- User is logged in -->
+      {% if current_user.is_authenticated %}
+      <div class="item">
+	<a class="ui inverted button" href="/user/account">{{ current_user.name }} {{ current_user.surname }}</a>
       </div>
+      <div class="item">
+	<a class="ui inverted button" href="/user/signout">Sign out</a>
+      </div>
+      <!-- User is not logged in -->
+      {% else %}
+      <div class="item">
+	<a class="ui inverted button" href="/user/signin">Log in</a>
+      </div>
+      <div class="item">
+	<a class="ui inverted button" href="/user/signup">Sign up</a>
+      </div>
+      {% endif %}
     </div>
-    {% endblock %}
+  </div>
+  {% endblock %}
 </div>
 
 <!-- Message flashing -->

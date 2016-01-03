@@ -74,6 +74,9 @@ p {
 }
 
 /* Semantic UI Homepage Theme */
+
+/* Menus */
+
 .ui.menu .item:before {
   width: 0em;
 }
@@ -83,6 +86,9 @@ p {
   padding-right: 5em;
   padding-top: 2em;
 }
+
+/* Containers and Grids */
+
 .ui.page.grid {
   padding-left: 0em;
   padding-right: 0em;
@@ -140,12 +146,15 @@ p {
 .footer.segment {
   padding: 5em 0em;
 }
+
+/* Menu Items */
+
 .secondary.pointing.menu .toc.item {
   display: none;
 }
 @media only screen and (max-width: 700px) {
   .ui.fixed.menu {
-    display: none !important;
+    display: none;
   }
   .secondary.pointing.menu .item,
   .secondary.pointing.menu .menu {
@@ -166,4 +175,27 @@ p {
 
 .row .center {
   text-align: center !important;
+}
+
+.ui.github.container {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Typography */
+
+.ui.header {
+  padding-top: 25px;
+}
+
+/* Flash messages */
+ul .positive .message{
+  color: #1b1c1d;
+}
+
+ul {
+  -webkit-margin-after: 0em;
+  -webkit-margin-before: 0em;
+  background-color: #1b1c1d;
 }
