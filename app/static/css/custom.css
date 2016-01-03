@@ -100,10 +100,6 @@ p {
   border-top: 0px;
 }
 
-.masthead.segment {
-  min-height: 700px;
-}
-
 .masthead h1.ui.header {
   margin-top: 3em;
   margin-bottom: 0em;
@@ -181,6 +177,12 @@ p {
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.ui.github.elements {
+  padding-right: 2em;
+  padding-bottom: 1em;
+  
 }
 
 /* Typography */
