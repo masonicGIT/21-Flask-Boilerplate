@@ -79,7 +79,7 @@ class DashboardView(BaseView):
     def dashboard(self):
         flush_message = ""
         if request.method == 'POST':
-            flush_message = self.doFlush(self)
+            flush_message = self.doFlush()
         status_mining = status.status_mining(conf, client)
         status_wallet = status.status_wallet(conf, client)
         status_account = status.status_account(conf)
