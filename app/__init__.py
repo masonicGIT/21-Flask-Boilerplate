@@ -77,27 +77,25 @@ admin = Admin(app, name='Admin', template_mode='bootstrap3')
 class DashboardView(BaseView):
     @expose('/', methods=('GET', 'POST'))
     def dashboard(self):
+        flush_message = ""
+        if request.method == 'POST':
+            flush_message = flushEarnings(self)
         status_mining = status.status_mining(conf, client)
         status_wallet = status.status_wallet(conf, client)
         status_account = status.status_account(conf)
         status_earnings = client.get_earnings()
         print(status_earnings)
-        return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings)
+        return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings, flush_message=flush_message)
     
-    @expose('/flushEarnings/', methods=('GET', 'POST'))
     def flushEarnings(self):
         pre_flush_wallet = status.status_wallet(conf, client)
         flush_response = flush.flush_earnings(conf, client)
         print(flush_response)
-        status_mining = status.status_mining(conf, client)
         status_wallet = status.status_wallet(conf, client)
-        status_account = status.status_account(conf)
-        status_earnings = client.get_earnings()
         if pre_flush_wallet['wallet']['twentyone_balance'] != status_wallet['wallet']['twentyone_balance']:
-            flush_message = "Flush successful!"
+            return "Flush successful!"
         else:
-            flush_message = "Flush error or less than 20000 OffChain Satoshis"
-        return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings, flush_message=flush_message)
+            return "Flush error or less than 20000 OffChain Satoshis"
 
 
 class ModelView(ModelView):
