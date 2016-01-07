@@ -123,7 +123,7 @@ class multisig_wallet(object):
         except:
             print('There was an error with the request')
 
-        if (r.status_code == 401):
+        if (r.status_code != 200):
             print('BitGo Express: User does not exist')            
             print('BitGo Express: Checking API availability..')
             serviceOk = multisig_wallet.session()
@@ -134,7 +134,7 @@ class multisig_wallet(object):
             # Return if service is down
             if (serviceOk == False):
                 return None
-                
+
         print('Generated address for ' + username + ':')       
         print(r.json()['address'])
         return r.json()['address']
