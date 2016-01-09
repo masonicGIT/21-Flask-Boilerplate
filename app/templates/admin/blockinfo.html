@@ -1,0 +1,23 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+<h3>Block Height:</h3>
+<h4>{{ b_height }}</h4>
+
+<h3>Time Stamp:</h3>
+<h4>{{ b_time }}</h4>
+
+<h3># of Transactions:</h3>
+<h4>{{ t_number }}</h4>
+
+<h3>Size:</h3>
+<h4>{{ b_size }}</h4>
+
+<h3>Fees:</h3>
+<h4>{{ b_fees }}</h4>
+
+<h3>Block Hash:</h3>
+<a href="https://bitcoin.toshi.io/api/v0/blocks/{{ b_hash }}"><h4>{{ b_hash }}</h4></a>
+
+{% endblock %}
