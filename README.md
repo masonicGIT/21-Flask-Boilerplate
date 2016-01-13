@@ -79,10 +79,15 @@ To access the Bitcoin wallet (only works after BitGo wallet software setup) navi
 The folder structure mandates that everything be held in the ``/app`` folder, all initialization and configurations to be maintained out of this folder
 
 ``/static`` - Contains all javascript and css
+
 ``/templates`` - Contains the Jinja2 templates which source all javascript and styles from the statics folder
+
 ``/views`` - Contains all of the routes and associated logic
+
 ``/toolbox`` - Contains utilities such as the mutlisig wallet / email libraries
+
 ``/models`` - Contains all database models
+
 ``/forms`` - Contains the rules and error checking for all forms in the templates
 
 ## 21 Specific Features
