@@ -74,6 +74,16 @@ To access the Bitcoin wallet (only works after BitGo wallet software setup) navi
 	./bin/bitgo-express --debug --port 3080 --env prod --bind localhost &
 	```
 
+## Folder Structure
+
+The folder structure mandates that everything be held in the ``/app`` folder, all initialization and configurations to be maintained out of this folder
+
+``/static`` - Contains all javascript and css
+``/templates`` - Contains the Jinja2 templates which source all javascript and styles from the statics folder
+``/views`` - Contains all of the routes and associated logic
+``/toolbox`` - Contains utilities such as the mutlisig wallet / email libraries
+``/models`` - Contains all database models
+``/forms`` - Contains the rules and error checking for all forms in the templates
 
 ## 21 Specific Features
 
@@ -128,50 +138,6 @@ Please feel free to fill in anything else that you feel would be useful or to cr
 
 - [Semantic UI](http://semantic-ui.com/) for the global style. Very similar to [Bootstrap](http://getbootstrap.com/).
 - [Leaflet JS](http://leafletjs.com/) for the map. I only added for the sake of the example.
-
-## Structure
-
-Everything is contained in the ``app/`` folder.
-
-- There you have the ``static/`` and ``templates/`` folders. The ``templates/`` folder contains macros, error views and a common layout.
-- The ``views/`` folder separates the user and the website logic, which can be extended to the the admin views.
-- The same goes for the ``forms/`` folder.
-- The ``models.py`` script contains the SQLAlchemy code, for the while it only contains the logic for a ``users`` table.
-- The ``toolbox/`` folder is contains generic utils
-
-
-## Setup
-
-### Vanilla
-
-- Install the required libraries.
-
-	``pip3 install -r requirements.txt``
-
-- Create the database.
-
-	``python3 createdb.py``
-
-- Run the application.
-
-	``python3 run.py``
-
-- Navigate to ``localhost:5000``.
-
-- To access the admin panel and the 21 dashboard navigate to ``localhost:5000/admin``. 
-
-
-### Virtual environment
-
-```
-pip install virtualenv
-virtualenv venv
-venv/bin/activate (venv\scripts\activate on Windows)
-pip install -r requirements.txt
-python createdb.py
-python run.py
-```
-
 
 ## Deployment
 
