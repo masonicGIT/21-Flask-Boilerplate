@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+{% if current_user.is_authenticated %}
+
+<div class="ui center aligned text container">
+  <h1 class="ui header">{{ title }}</h1>
+</div>
+<div class="ui vertical quote segment">
+  <div class="ui equal width stackable internally celled grid">
+    <div class="ui left aligned row">
+      <div class="column">
+	<h2 class="ui header">Wallet</h2>	
+	<h4 class="ui header">Your balance is: {{ balance }} Satoshis</h4>
+	<h4 class="ui header">Your address is: {{ address }}</h4>
+	<form id="generateAddress" action="/marketplace" method="get">
+	  <button class="ui primary button" type="submit" form="generateAddress">Generate Address</button>
+      </form>
+      </div>
+      <div class="column">
+	<div class="ui left padded text container segment form-wallet">
+	  <form id="sendBitcoin" class="ui form" action="/wallet" method="post">
+	    <h4 class="ui dividing header">Send</h4>
+	    {{ m.render_field(form.address) }}
+	    {{ m.render_field(form.amount) }}
+	    {{ form.csrf_token }}
+	    <button class="ui primary button" type="submit" form="sendBitcoin">Send</button>
+	  </form>
+	</div>	  
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="ui vertical stripe segment">
+  <div class="ui text container">
+    <div class="center aligned column">
+      <h3 class="ui header">Use your digital wallet to purchase digital goods and services</h3>
+      <p>The integrated wallet enables you to purchase goods and services made available to you by the 21 Bitcoin Computer operator that runs this service</p>
+      <h4 class="ui horizontal header divider">
+	<a href="#">Welcome to the marketplace</a>
+      </h4>
+    </div>
+    <div class="ui vertical quote segment">
+      <div class="ui equal width stackable internally grid">	
+	<div class="center aligned row">
+	  <div class="column">
+	    <h1>{{ market[0].prettyName  }}</h1>
+	    <p>Purchase a profound quote to swoon the ladies with</p>
+	    <h4>{{ market[0].price }} Satoshis</h4>	    
+	    <form id="quote" action="/quote" method="get">
+	      <button class="ui huge button" type="submit" form="quote">Purchase</button>
+	    </form>
+	  </div>
+	  <div class="column">
+	    <h1>Test Service</h1>
+	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Build Now</a>	    
+	  </div>
+	</div>
+	<div class="center aligned row">
+	  <div class="column">
+	    <h1>Test Service</h1>
+	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Build Now</a>	    
+	  </div>
+	  <div class="column">
+	    <h1>Test Service</h1>
+	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Build Now</a>	    
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+{% endif %}    
+
+{% endblock %}

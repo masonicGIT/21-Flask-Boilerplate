@@ -121,7 +121,7 @@ class multisig_wallet(object):
                               headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN,'content-type': 'application/json'})
 
         except:
-            print('There was an error with the request')
+            return None
 
         if (r.status_code != 200):
             print('BitGo Express: User does not exist')            
@@ -177,7 +177,7 @@ class multisig_wallet(object):
                         headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN,'content-type': 'application/json'})
 
         except:
-            print('There was an error retrieving your wallet')
+            return None
 
         if (r.status_code == 401):
             print('BitGo Express: User does not exist')            

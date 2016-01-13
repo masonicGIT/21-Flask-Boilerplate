@@ -5,6 +5,14 @@ from app.forms import wallet as wallet_forms
 import random
 from app.toolbox.multisig_wallet import multisig_wallet
 
+# Import two1 libraries
+from two1.commands import buy
+from two1.commands.config import Config
+from two1.commands.config import TWO1_HOST
+
+# Import Marketplace Configs
+market = app.config['MARKET_DATA']
+
 def login_required(func):
     @wraps(func)
     def func_wrapper(*args, **kwargs):
@@ -24,9 +32,16 @@ def index():
 def map():
     return render_template('map.html', title='Map')
 
-@app.route('/wallet', methods=['GET', 'POST'])
+@app.route('/marketplace/quote', methods=['POST'])
 @login_required
-def wallet():
+def marketplace_quote():
+    get_payout_address();
+    buy._buy(Config, market.url, None, 'GET', None, None, 'offchain', market.price, False)
+    return jsonify({'quote': quote})
+    
+@app.route('/marketplace', methods=['GET', 'POST'])
+@login_required
+def marketplace():
     form = wallet_forms.Send()
     username = session['email']    
     user = models.User.query.filter_by(email=username).first()
@@ -34,10 +49,10 @@ def wallet():
     balance = multisig_wallet.get_balance(str(username))
 
     if(address == None or balance == None):
-        return render_template('walleterror.html', title='Error loading wallet service')
+        return render_template('marketplaceerror.html', title='Error loading wallet service')
 
     if request.method == 'GET':
-        return render_template('wallet.html', title='Wallet', address=address, balance=balance, form=form)
+        return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market)
 
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -52,17 +67,8 @@ def wallet():
                 flash('Please enter a valid value', 'negative')
             else:
                 flash(tx['message'], 'negative')
-            return render_template('wallet.html', title='Wallet', address=address, balance=balance, form=form)
-        return render_template('wallet.html', title='Wallet', address=address, balance=balance, form=form)
-
-@app.route('/wallet/generateAddress', methods=['GET'])
-@login_required
-def wallet_generateAddress():
-    username = session['email']    
-    address = multisig_wallet.generate_address(str(username))
-    if(address == 'Error'):
-        return render_template('walleterror.html', title='Wallet Error')
-    return jsonify({'address': address})
+            return render_template('marketplace.html', title='Marketplae', address=address, balance=balance, form=form, market=market)
+        return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market)
 
 @app.route('/map/refresh', methods=['POST'])
 @login_required
@@ -73,6 +79,3 @@ def map_refresh():
     return jsonify({'points': points})
 
 
-@app.route('/test', methods=['GET'])
-def test():
-    return render_template('test.html', title='Test')
