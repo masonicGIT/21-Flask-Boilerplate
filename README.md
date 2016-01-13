@@ -76,7 +76,6 @@ To access the Bitcoin wallet (only works after BitGo wallet software setup) navi
 
 
 ## 21 Specific Features
------------------------
 
 - [x] Admin panel to provide information on 21 diagnostics
 - [x] Per user, individually provisioned wallets
@@ -92,7 +91,6 @@ To access the Bitcoin wallet (only works after BitGo wallet software setup) navi
 Please feel free to fill in anything else that you feel would be useful or to create an issue with your suggestion, with an emphasis on tools that have broad use cases
 
 ## Generic Boilerplate Features
--------------------------------
 
 - [x] User account sign up, sign in, password reset, all through asynchronous email confirmation.
 - [ ] Social media logins (Twitter, Facebook, Github) 
@@ -114,7 +112,6 @@ Please feel free to fill in anything else that you feel would be useful or to cr
 - [ ] Language selection.
 
 ## Libraries
-------------
 
 ### Backend
 
@@ -133,7 +130,6 @@ Please feel free to fill in anything else that you feel would be useful or to cr
 - [Leaflet JS](http://leafletjs.com/) for the map. I only added for the sake of the example.
 
 ## Structure
-------------
 
 Everything is contained in the ``app/`` folder.
 
