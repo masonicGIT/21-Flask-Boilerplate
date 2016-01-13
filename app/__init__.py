@@ -1,5 +1,5 @@
 from flask import Flask
-import sys, requests, json
+import sys, requests, json, urllib.request
 
 app = Flask(__name__)
 
@@ -97,6 +97,16 @@ class DashboardView(BaseView):
         else:
             return "Flush error or less than 20000 OffChain Satoshis"
 
+class BlockView(BaseView):
+    @expose('/', methods=('GET', 'POST'))
+    def blockinfo(self):
+        doc = urllib.request.urlopen('https://bitcoin.toshi.io/api/v0/blocks/latest')
+        content = doc.read()
+        raw_data = json.loads(content.decode())
+        b_time = raw_data['time']
+        b_time = b_time.replace("T", " ")
+        b_time = b_time.replace("Z", " UTC")
+        return self.render('admin/blockinfo.html', b_height=raw_data['height'], b_hash=raw_data['hash'], b_size=raw_data['size'], b_fees=raw_data['fees'], t_number=raw_data['transactions_count'], b_time=b_time)
 
 class ModelView(ModelView):
 
@@ -111,3 +121,4 @@ class ModelView(ModelView):
 # Users
 admin.add_view(ModelView(User, db.session))
 admin.add_view(DashboardView(name='Dashboard', endpoint='dashboard'))
+admin.add_view(BlockView(name='Latest Block Info', endpoint='blockinfo'))
