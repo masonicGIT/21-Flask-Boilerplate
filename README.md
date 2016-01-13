@@ -1,64 +1,63 @@
 # 21 Flask Boilerplate
-======================
 
 The 21 Flask Boilerplate provides a template app with built-in 21 Bitcoin Computer features to enable developers to quickly build out their apps without having to worry about building from scratch.  The Boilerplate includes two1 library integration providing admin's / Bitcoin Computer operators with access to mining and wallet information from a client-side application. The application also providers users who sign up with a multisignature HD wallet provided by BitGo, enabling users to send and receive Bitcoin from an individually-provisioned wallet.
 
 ## How to develop on the Flask Boilerplate
-------------------------------------------
+
 The 21 Flask Boilerplate must be run on a 21 Bitcoin Computer, please ensure that you have Python3 and Pip installed.
 
 ### Quick-Start (without BitGo wallet software)
 
-- Install the required libraries.
+Install the required libraries.
 ```
 $ pip3 install -r requirements.txt
 ```
-- Create and initialize the database.
+Create and initialize the database.
 ```
 $ python3 createdb.py
 ```
-- Run the application.
+Run the application.
 ```
 $ python3 run.py
 ```
-- If running 21 BC as desktop, open a browser and navigate to:
+If running 21 BC as desktop, open a browser and navigate to:
 ```
 localhost:5000
 ```
-- else if ssh'ing into your 21 BC, first download [ngrok](https://ngrok.com), then:
+else if ssh'ing into your 21 BC, first download [ngrok](https://ngrok.com), then:
 ``` 
 $ unzip /path/to/ngrok.zip
 ```
-- Run ngrok
+Run ngrok
 ```
 $ /path/to/ngrok http 5000
 ```
-- Navigate to the forwarding link provided by ngrok (will end with ngrok.io): 
+Navigate to the forwarding link provided by ngrok (will end with ngrok.io): 
 ```
 EX: https://[random string].ngrok.io
 ```
-- To access the admin panel which provides the 21 BC mining and wallet diagnostics navigate to:
+To access the admin panel which provides the 21 BC mining and wallet diagnostics navigate to:
 ```
 /admin
 ```
-- To access the Bitcoin wallet (only works after BitGo wallet software setup) navigate to: 
+To access the Bitcoin wallet (only works after BitGo wallet software setup) navigate to: 
 ```
 /marketplace
 ```
 ### BitGo wallet software setup
 
 1. Install Node and NPM
- ```
- curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
- sudo apt-get install -y nodejs npm
- ```
+	```
+	curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+	sudo apt-get install -y nodejs npm
+	```
 
 2. Install BitGo Express
-```
- git clone https://github.com/BitGo/bitgo-express
- cd bitgo-express
- npm install
- ```
+	```
+	git clone https://github.com/BitGo/bitgo-express
+	cd bitgo-express
+	npm install
+	```
 
 3. Signup on BitGo and get a developer's token
   * Sign up at www.bitgo.com/wallet.
@@ -71,9 +70,9 @@ EX: https://[random string].ngrok.io
   * Take this token and set it to the ACCESS_TOKEN variable in config.py 
 
 4. Run BitGo Express
- ```
- ./bin/bitgo-express --debug --port 3080 --env prod --bind localhost &
- ```
+	```
+	./bin/bitgo-express --debug --port 3080 --env prod --bind localhost &
+	```
 
 
 ## 21 Specific Features
