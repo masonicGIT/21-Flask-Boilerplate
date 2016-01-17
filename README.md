@@ -1,6 +1,6 @@
 # 21 Flask Boilerplate
 
-The 21 Flask Boilerplate provides a template app with built-in 21 Bitcoin Computer features to enable developers to quickly build out their apps without having to worry about building from scratch.  The Boilerplate includes two1 library integration providing admin's / Bitcoin Computer operators with access to mining and wallet information from a client-side application. The application also providers users who sign up with a multisignature HD wallet provided by BitGo, enabling users to send and receive Bitcoin from an individually-provisioned wallet.
+The 21 Flask Boilerplate provides a template app with built-in 21 Bitcoin Computer features to enable developers to quickly get their project off the ground.  The Boilerplate includes two1 library integration providing Bitcoin Computer operators  with access to mining and wallet information from a client-side application. The application also providers new users with a multisignature HD wallet provided by BitGo, enabling users to send and receive Bitcoin from an individually-provisioned wallet.
 
 ## How to develop on the Flask Boilerplate
 
