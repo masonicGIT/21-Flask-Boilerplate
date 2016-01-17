@@ -1,12 +1,18 @@
-from functools import wraps
-from flask import render_template, jsonify, session, redirect, request, json, flash
+# Import app 
 from app import app, models, bcrypt
 from app.forms import wallet as wallet_forms
+
+# Import libraries
 import random
+from functools import wraps
+from flask import render_template, jsonify, session, redirect, request, json, flash
+
 from app.toolbox.multisig_wallet import multisig_wallet
+from app.toolbox.two1lib import two1lib
 
 # Import two1 libraries
 from two1.commands import buy
+from two1.commands import status
 from two1.commands.config import Config
 from two1.commands.config import TWO1_HOST
 
@@ -32,13 +38,6 @@ def index():
 def map():
     return render_template('map.html', title='Map')
 
-@app.route('/marketplace/quote', methods=['POST'])
-@login_required
-def marketplace_quote():
-    get_payout_address();
-    buy._buy(Config, market.url, None, 'GET', None, None, 'offchain', market.price, False)
-    return jsonify({'quote': quote})
-    
 @app.route('/marketplace', methods=['GET', 'POST'])
 @login_required
 def marketplace():
@@ -48,18 +47,18 @@ def marketplace():
     address = multisig_wallet.generate_address(str(username))    
     balance = multisig_wallet.get_balance(str(username))
 
+    quote = two1lib.get_quote()    
+
     if(address == None or balance == None):
         return render_template('marketplaceerror.html', title='Error loading wallet service')
 
     if request.method == 'GET':
-        return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market)
+        return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market, quote=quote)
 
     if request.method == 'POST':
         if form.validate_on_submit():
             tx = multisig_wallet.send_bitcoin(username, form.address.data, form.amount.data, user.password)
             # TODO: Use a Bitcoin lib to check if this is a valid hash
-            print(tx)
-            print(type(tx))
             if (type(tx) is str):
                 message = 'You just sent ' + str(form.amount.data) + ' Satoshis to: ' + str(form.address.data) + ' - You may view your transaction at: https://btc.blockr.io/tx/info/' + str(tx)
                 flash(message, 'positive')

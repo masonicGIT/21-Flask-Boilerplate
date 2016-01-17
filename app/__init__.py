@@ -84,7 +84,7 @@ class DashboardView(BaseView):
         status_wallet = status.status_wallet(conf, client)
         status_account = status.status_account(conf)
         status_earnings = client.get_earnings()
-        print(status_earnings)
+
         return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings, flush_message=flush_message)
     
     def doFlush(self):

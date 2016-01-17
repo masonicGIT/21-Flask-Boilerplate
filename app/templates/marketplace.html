@@ -48,7 +48,7 @@
     <div class="ui vertical quote segment">
       <div class="ui equal width stackable internally grid">	
 	<div class="center aligned row">
-	  <div class="column">
+	  <div class="eight wide column pushdown30">
 	    <h1>{{ market[0].prettyName  }}</h1>
 	    <p>Purchase a profound quote to swoon the ladies with</p>
 	    <h4>{{ market[0].price }} Satoshis</h4>	    
@@ -56,20 +56,14 @@
 	      <button class="ui huge button" type="submit" form="quote">Purchase</button>
 	    </form>
 	  </div>
-	  <div class="column">
-	    <h1>Test Service</h1>
-	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Build Now</a>	    
-	  </div>
-	</div>
-	<div class="center aligned row">
-	  <div class="column">
-	    <h1>Test Service</h1>
-	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Build Now</a>	    
-	  </div>
-	  <div class="column">
-	    <h1>Test Service</h1>
-	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Build Now</a>	    
-	  </div>
+	  {% for key in quote %}
+	  <div class="eight wide column pushdown30">
+	    <h1>{{ key.name }}</h1>
+	    <p>{{ key.description }}</p>
+	    <h4>1000 Satoshis</h4>  
+	    <a class="ui huge button" href="https://21.co/learn/" target="_blank">Purchase</a>
+	  </div>	   
+	  {% endfor %}
 	</div>
       </div>
     </div>
