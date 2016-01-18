@@ -5,9 +5,7 @@ from two1.commands.formatters import search_formatter
 from two1.commands.formatters import sms_formatter
 from two1.lib.bitrequests import BitTransferRequests
 from two1.lib.bitrequests import OnChainRequests
-from two1.lib.bitrequests import ChannelRequests
 from two1.lib.util.uxstring import UxString
-from two1.lib.channels.statemachine import PaymentChannelStateMachine
 import re
 
 from two1.lib.wallet.utxo_selectors import DEFAULT_INPUT_FEE
@@ -65,15 +63,6 @@ class two1lib(object):
                 bit_req = BitTransferRequests(config.machine_auth, config.username)
             elif payment_method == 'onchain':
                 bit_req = OnChainRequests(config.wallet)
-            elif payment_method == 'channel':
-                bit_req = ChannelRequests(config.wallet)
-                channel_list = bit_req._channelclient.list()
-                if not channel_list:
-                    confirmed = click.confirm(UxString.buy_channel_warning.format(
-                        bit_req.DEFAULT_DEPOSIT_AMOUNT,
-                        PaymentChannelStateMachine.PAYMENT_TX_MIN_OUTPUT_AMOUNT), default=True)
-                    if not confirmed:
-                        raise Exception(UxString.buy_channel_aborted)
                     
             else:
                 raise Exception('Payment method does not exist.')
@@ -142,11 +131,6 @@ class two1lib(object):
             elif payment_method == 'onchain':
                 balance_amount = user_balances.onchain
                 balance_type = 'blockchain'
-            elif payment_method == 'channel':
-                balance_amount = user_balances.channels
-                balance_type = 'payment channels'
-                config.log("You spent: %s Satoshis. Remaining %s balance: %s Satoshis." % (
-                res.amount_paid, balance_type, balance_amount))
 
         # Record the transaction if it was a payable request
         if hasattr(res, 'paid_amount'):
