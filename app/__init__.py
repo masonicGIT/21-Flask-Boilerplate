@@ -1,5 +1,5 @@
 from flask import Flask
-import sys, requests, json, urllib.request
+import sys, requests, json, urllib.request, os
 
 app = Flask(__name__)
 
@@ -78,15 +78,33 @@ class DashboardView(BaseView):
     @expose('/', methods=('GET', 'POST'))
     def dashboard(self):
         flush_message = ""
-        if request.method == 'POST':
-            flush_message = self.doFlush()
         status_mining = status.status_mining(conf, client)
+
+        if request.method == 'POST':
+            print(request.form)
+            if request.form['submit'] == 'Flush Earnings':
+                flush_message = self.doFlush()
+            else:
+                if status_mining['is_mining'] == '21 mining chip running (/run/minerd.pid)':
+                    os.system('sudo minerd --stop')
+                else:
+                    os.system('21 mine')
+
+        status_mining = status.status_mining(conf, client)
+
+        if status_mining['is_mining'] == '21 mining chip running (/run/minerd.pid)':
+            mine_button_message = 'Click to Stop Miner'
+            mining_message = 'Miner Is Running'
+        else:
+            mine_button_message = 'Click to Start Miner'
+            mining_message = 'Miner Is Not Running'
+
         status_wallet = status.status_wallet(conf, client)
         status_account = status.status_account(conf)
         status_earnings = client.get_earnings()
 
-        return self.render('admin/dashboard.html', status_mining=status_mining, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings, flush_message=flush_message)
-    
+        return self.render('admin/dashboard.html', status_mining=status_mining, mining_message=mining_message, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings, flush_message=flush_message, mine_button_message=mine_button_message)
+
     def doFlush(self):
         pre_flush_wallet = status.status_wallet(conf, client)
         flush_response = flush.flush_earnings(conf, client)
@@ -96,6 +114,7 @@ class DashboardView(BaseView):
             return "Flush successful!"
         else:
             return "Flush error or less than 20000 OffChain Satoshis"
+
 
 class BlockView(BaseView):
     @expose('/', methods=('GET', 'POST'))
