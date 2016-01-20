@@ -8,13 +8,6 @@ from functools import wraps
 from flask import render_template, jsonify, session, redirect, request, json, flash
 
 from app.toolbox.multisig_wallet import multisig_wallet
-from app.toolbox.two1lib import two1lib
-
-# Import two1 libraries
-from two1.commands import buy
-from two1.commands import status
-from two1.commands.config import Config
-from two1.commands.config import TWO1_HOST
 
 # Import Marketplace Configs
 market = app.config['MARKET_DATA']
@@ -47,13 +40,11 @@ def marketplace():
     address = multisig_wallet.generate_address(str(username))    
     balance = multisig_wallet.get_balance(str(username))
 
-    quote = two1lib.get_quote()    
-
     if(address == None or balance == None):
         return render_template('marketplaceerror.html', title='Error loading wallet service')
 
     if request.method == 'GET':
-        return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market, quote=quote)
+        return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market)
 
     if request.method == 'POST':
         if form.validate_on_submit():

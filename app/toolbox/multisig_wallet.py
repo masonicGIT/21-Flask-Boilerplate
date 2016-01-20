@@ -2,9 +2,7 @@ from app import app, models
 import os, requests, json
 
 DEFAULT_WALLET_PATH = os.path.join(os.path.expanduser('~'),
-                                   ".two1",
-                                   "wallet",
-                                   "multisig_wallet.json")
+                                   ".multisig_wallet.json")
 
 ACCESS_TOKEN = app.config['ACCESS_TOKEN']
 
