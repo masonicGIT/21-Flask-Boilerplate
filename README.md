@@ -40,10 +40,13 @@ To access the admin panel which provides the 21 BC mining and wallet diagnostics
 ```
 /admin
 ```
+and use the username 'admin' and password 'password'.
+
 To access the Bitcoin wallet (only works after BitGo wallet software setup) navigate to: 
 ```
 /marketplace
 ```
+and sign up for an account. The information you enter will be stored on your local database.
 ### BitGo wallet software setup
 
 1. Install Node and NPM
