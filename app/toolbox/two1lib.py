@@ -8,8 +8,18 @@ from two1.lib.bitrequests import OnChainRequests
 from two1.lib.util.uxstring import UxString
 import re
 
-from two1.lib.wallet.utxo_selectors import DEFAULT_INPUT_FEE
-from two1.lib.wallet.utxo_selectors import DEFAULT_OUTPUT_FEE
+FEE_PER_KB = 10000  # Satoshis
+
+# Each txn input is ~150 bytes:
+# outpoint: 32 bytes
+# outpoint index: 4 bytes
+# signature: 77-78 bytes
+# compressed public key: 33 bytes
+# sequence num: 4 bytes
+DEFAULT_INPUT_FEE = int(0.15 * FEE_PER_KB)
+
+# Each txn output is ~40 bytes, thus 0.04
+DEFAULT_OUTPUT_FEE = int(0.04 * FEE_PER_KB)
 
 # Two UTXO with one Output
 DEFAULT_ONCHAIN_BUY_FEE = (DEFAULT_INPUT_FEE * 2) + DEFAULT_OUTPUT_FEE
