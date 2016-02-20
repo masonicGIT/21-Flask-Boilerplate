@@ -74,6 +74,9 @@
     {{ m.nav_link('marketplace', 'Marketplace') }}    
     <div class="right menu">
       <!-- User is logged in -->
+      <div class="item">
+	<a class="ui inverted button" href="/admin">Admin</a>
+      </div>      
       {% if current_user.is_authenticated %}
       <div class="item">
 	<a class="ui inverted button" href="/user/account">{{ current_user.name }} {{ current_user.surname }}</a>
