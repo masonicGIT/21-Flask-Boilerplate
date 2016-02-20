@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div id="tutorials" style="max-width: 1200px; margin-left: auto; margin-right: auto; padding-right: 15px; padding-left: 15px; display: table;">
+  <div class="row">
+    <div class="container col-lg-10 col-md-10 col-sm-12" style="float: none; padding: 40px 60px; background-color: #fff; margin: 15px auto; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)">
+      {% for item in tutorials %}
+        <div class="clear-bootstrap" style="margin-left: -15px; margin-right: -15px;">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-top: 30px; height: auto;">
+	    <a href="{{ item.url }}" target="_blank">
+              <img class="" style="border-radius: 40px; width: 100%;" src="{{ item.img }}" onmouseout="this.src='{{ item.img }}'" onmouseenter="this.src='{{ item.img_hover }}'">
+	    </a>
+            <h3 style="font: 24px 'Titillium Web', sans-serif; line-height: 1.1;">
+	      <a href="{{ item.url }}" target="_blank">
+		{{ item.prettyName }}
+	      </a>
+	    </h3>
+
+            <p style="font: 18px 'Titillium Web', sans-serif">{{ item.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+
+</script>
+
+{% endblock %}

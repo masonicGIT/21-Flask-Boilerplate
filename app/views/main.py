@@ -18,6 +18,7 @@ from two1.commands.config import TWO1_HOST
 
 # Import Marketplace Configs
 market = app.config['MARKET_DATA']
+tutorial_array = app.config['TUTORIALS']
 
 def login_required(func):
     @wraps(func)
@@ -34,9 +35,12 @@ def index():
     return render_template('index.html', title='Home')
 
 @app.route('/map')
-@login_required
 def map():
     return render_template('map.html', title='Map')
+
+@app.route('/tutorials')
+def tutorials():
+    return render_template('tutorials.html', title='Tutorials', tutorials=tutorial_array)
 
 @app.route('/marketplace', methods=['GET', 'POST'])
 @login_required
@@ -70,7 +74,6 @@ def marketplace():
         return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market)
 
 @app.route('/map/refresh', methods=['POST'])
-@login_required
 def map_refresh():
     points = [(random.uniform(48.8434100, 48.8634100),
                random.uniform(2.3388000, 2.3588000))

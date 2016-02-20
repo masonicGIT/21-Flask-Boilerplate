@@ -5,5 +5,5 @@ wtforms
 flask-login
 flask-mail
 itsdangerous
-flask-bcrypt
+flask-bcrypt==0.7.1
 flask-admin
