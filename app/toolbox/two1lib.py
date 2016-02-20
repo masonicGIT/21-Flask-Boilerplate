@@ -1,3 +1,4 @@
+from app import app
 from two1.commands import buy
 from two1.commands.config import Config
 from two1.commands.config import TWO1_MERCHANT_HOST
@@ -13,6 +14,8 @@ from two1.lib.wallet.utxo_selectors import DEFAULT_OUTPUT_FEE
 
 # Two UTXO with one Output
 DEFAULT_ONCHAIN_BUY_FEE = (DEFAULT_INPUT_FEE * 2) + DEFAULT_OUTPUT_FEE
+
+MARKETPLACE_API = app.config['MARKETPLACE_API']
 
 conf = Config()
 
@@ -150,11 +153,13 @@ class two1lib(object):
 
         """
 
-        url = 'http://10.244.34.100:21411/up-premium'
+        url = MARKETPLACE_API
         price = 1000
-        
-        marketplaceInfo = two1lib.buy(conf, url, None, 'GET', None, None, 'offchain', price, False)
-        
+
+        try: 
+          marketplaceInfo = two1lib.buy(conf, url, None, 'GET', None, None, 'offchain', price, False)
+        except:
+          return {}
         return marketplaceInfo
 
 
