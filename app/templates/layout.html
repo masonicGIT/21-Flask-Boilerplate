@@ -11,6 +11,10 @@
       <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
       <!-- jQuery -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <!-- Font Libraries -->
+      <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" type="text/css"/>
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
       <!-- Semantic Library -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
       <!-- Semantic CSS Components -->
@@ -66,6 +70,7 @@
   <div class="ui large attached inverted pointing menu">
     {{ m.nav_link('index', 'Home') }}
     {{ m.nav_link('map', 'Map') }}
+    {{ m.nav_link('tutorials', 'Tutorials') }}    
     {{ m.nav_link('marketplace', 'Marketplace') }}    
     <div class="right menu">
       <!-- User is logged in -->
