@@ -24,7 +24,7 @@ If running 21 BC as desktop, open a browser and navigate to:
 ```
 localhost:5000
 ```
-else if ssh'ing into your 21 BC, first download [ngrok](https://ngrok.com), then:
+else if ssh'ing into your 21 BC, first download [ngrok](https://ngrok.com) on your Bitcoin Computer, then:
 ``` 
 $ unzip /path/to/ngrok.zip
 ```
