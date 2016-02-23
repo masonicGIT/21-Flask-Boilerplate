@@ -24,12 +24,11 @@ If running 21 BC as desktop, open a browser and navigate to:
 ```
 localhost:5000
 ```
-else if ssh'ing into your 21 BC:
-  1. Install unzip:
+If ssh'ing into your 21 BC, Install unzip:
 ``` 
 $ sudo apt-get install unzip
 ```
-  2. Download [ngrok](https://ngrok.com) on your Bitcoin Computer, then:
+ Download [ngrok](https://ngrok.com) on your Bitcoin Computer, then:
 ``` 
 $ unzip /path/to/ngrok.zip
 ```
