@@ -10,6 +10,8 @@ The 21 Flask Boilerplate must be run on a 21 Bitcoin Computer, please ensure tha
 
 Install the required libraries.
 ```
+$ 
+sudo apt-get install build-essential libssl-dev libffi-dev python-dev
 $ sudo pip3 install -r requirements.txt
 ```
 Create and initialize the database.
