@@ -1,12 +1,10 @@
 from app import app
 from two1.commands import buy
 from two1.commands.config import Config
-from two1.commands.config import TWO1_MERCHANT_HOST
-from two1.commands.formatters import search_formatter
-from two1.commands.formatters import sms_formatter
+from two1 import TWO1_WWW_HOST
 from two1.lib.bitrequests import BitTransferRequests
 from two1.lib.bitrequests import OnChainRequests
-from two1.lib.util.uxstring import UxString
+import two1.commands.util.uxstring as uxstring
 import re
 
 FEE_PER_KB = 10000  # Satoshis
@@ -58,7 +56,7 @@ class two1lib(object):
             target_url = resource
             seller = target_url
         elif resource in DEMOS:
-            target_url = TWO1_MERCHANT_HOST + DEMOS[resource]["path"]
+            target_url = TWO1_WWW_HOST + DEMOS[resource]["path"]
             data = json.dumps(data)
         else:
             raise NotImplementedError('Endpoint search is not implemented!')
@@ -88,11 +86,11 @@ class two1lib(object):
                     method.lower(), target_url, max_price=max_price,
                     data=data or data_file, headers=headers)
         except ResourcePriceGreaterThanMaxPriceError as e:
-            config.log(UxString.Error.resource_price_greater_than_max_price.format(e))
+            config.log(uxstring.Error.resource_price_greater_than_max_price.format(e))
             return
         except Exception as e:
             if 'Insufficient funds.' in str(e):
-                config.log(UxString.Error.insufficient_funds_mine_more.format(
+                config.log(uxstring.Error.insufficient_funds_mine_more.format(
                     DEFAULT_ONCHAIN_BUY_FEE
                 ))
             else:
