@@ -2,8 +2,8 @@ from app import app
 from two1.commands import buy
 from two1.commands.config import Config
 from two1 import TWO1_WWW_HOST
-from two1.lib.bitrequests import BitTransferRequests
-from two1.lib.bitrequests import OnChainRequests
+from two1.bitrequests import BitTransferRequests
+from two1.bitrequests import OnChainRequests
 import two1.commands.util.uxstring as uxstring
 import re
 
@@ -37,8 +37,7 @@ URL_REGEXP = re.compile(
     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 DEMOS = {
-    "search": {"path": "/search/bing", "formatter": search_formatter},
-    "sms": {"path": "/phone/send-sms", "formatter": sms_formatter}
+    "search": {"path": "/search/bing"}
 }
 
 class two1lib(object):

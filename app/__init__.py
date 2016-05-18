@@ -72,7 +72,7 @@ from two1.commands import flush
 from two1.commands import mine
 from two1.wallet import Wallet
 from two1.server.machine_auth_wallet import MachineAuthWallet
-from two1.lib.server import rest_client
+from two1.server import rest_client
 from two1.commands.config import Config
 from two1 import TWO1_HOST
 
