@@ -57,8 +57,8 @@ and sign up for an account. The information you enter will be stored on your loc
 
 1. Install Node and NPM
 	```
-	curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-	sudo apt-get install -y nodejs npm
+	curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+	sudo apt-get install -y nodejs
 	```
 
 2. Install BitGo Express
