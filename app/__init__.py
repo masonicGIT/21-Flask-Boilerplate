@@ -94,14 +94,14 @@ class DashboardView(BaseView):
             if request.form['submit'] == 'Flush Earnings':
                 flush_message = self.doFlush()
             else:
-                if status_mining['is_mining'] == '21 mining chip running (/run/minerd.pid)':
+                if status_mining['is_mining'] == 'A 21 mining chip running (/run/minerd.pid)':
                     os.system('sudo minerd --stop')
                 else:
                     os.system('21 mine')
 
         status_mining = status.status_mining(client)
 
-        if status_mining['is_mining'] == '21 mining chip running (/run/minerd.pid)':
+        if status_mining['is_mining'] == 'A 21 mining chip running (/run/minerd.pid)':
             mine_button_message = 'Click to Stop Miner'
             mining_message = 'Miner Is Running'
         else:
