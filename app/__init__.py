@@ -70,51 +70,55 @@ from two1.commands import status
 from two1.commands import log
 from two1.commands import flush
 from two1.commands import mine
-from two1.lib.server import rest_client
+from two1.wallet import Wallet
+from two1.server.machine_auth_wallet import MachineAuthWallet
+from two1.server import rest_client
 from two1.commands.config import Config
-from two1.commands.config import TWO1_HOST
+from two1 import TWO1_HOST
 
-conf = Config()
+wallet = Wallet()
 host = TWO1_HOST
-client = rest_client.TwentyOneRestClient(host, conf.machine_auth, conf.username)
+conf = Config()
+username = Config().username
+client = rest_client.TwentyOneRestClient(host, MachineAuthWallet(wallet), username)
 admin = Admin(app, name='Admin', template_mode='bootstrap3')
 
 class DashboardView(BaseView):
     @expose('/', methods=('GET', 'POST'))
     def dashboard(self):
         flush_message = ""
-        status_mining = status.status_mining(conf, client)
+        status_mining = status.status_mining(client)
 
         if request.method == 'POST':
             print(request.form)
             if request.form['submit'] == 'Flush Earnings':
                 flush_message = self.doFlush()
             else:
-                if status_mining['is_mining'] == '21 mining chip running (/run/minerd.pid)':
+                if status_mining['is_mining'] == 'A 21 mining chip running (/run/minerd.pid)':
                     os.system('sudo minerd --stop')
                 else:
                     os.system('21 mine')
 
-        status_mining = status.status_mining(conf, client)
+        status_mining = status.status_mining(client)
 
-        if status_mining['is_mining'] == '21 mining chip running (/run/minerd.pid)':
+        if status_mining['is_mining'] == 'A 21 mining chip running (/run/minerd.pid)':
             mine_button_message = 'Click to Stop Miner'
             mining_message = 'Miner Is Running'
         else:
             mine_button_message = 'Click to Start Miner'
             mining_message = 'Miner Is Not Running'
 
-        status_wallet = status.status_wallet(conf, client)
-        status_account = status.status_account(conf)
+        status_wallet = status.status_wallet(client, wallet)
+        status_account = status.status_account(client, wallet)
         status_earnings = client.get_earnings()
 
         return self.render('admin/dashboard.html', status_mining=status_mining, mining_message=mining_message, status_wallet=status_wallet['wallet'], status_account=status_account, status_earnings=status_earnings, flush_message=flush_message, mine_button_message=mine_button_message)
 
     def doFlush(self):
-        pre_flush_wallet = status.status_wallet(conf, client)
-        flush_response = flush.flush_earnings(conf, client)
+        pre_flush_wallet = status.status_wallet(client, wallet)
+        flush_response = flush._flush(conf, client)
         print(flush_response)
-        status_wallet = status.status_wallet(conf, client)
+        status_wallet = status.status_wallet(client, wallet)
         if pre_flush_wallet['wallet']['twentyone_balance'] != status_wallet['wallet']['twentyone_balance']:
             return "Flush successful!"
         else:

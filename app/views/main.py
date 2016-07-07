@@ -14,7 +14,7 @@ from app.toolbox.two1lib import two1lib
 from two1.commands import buy
 from two1.commands import status
 from two1.commands.config import Config
-from two1.commands.config import TWO1_HOST
+from two1 import TWO1_HOST
 
 # Import Marketplace Configs
 market = app.config['MARKET_DATA']

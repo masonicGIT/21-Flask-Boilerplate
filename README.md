@@ -8,8 +8,10 @@ The 21 Flask Boilerplate must be run on a 21 Bitcoin Computer, please ensure tha
 
 ### Quick-Start (without BitGo wallet software)
 
-Install the required libraries.
+Install the required libraries. 
+Install this first line if you are working with the 21 free client on a Ubuntu instance.
 ```
+$ sudo apt-get install build-essential libssl-dev libffi-dev python-dev
 $ sudo pip3 install -r requirements.txt
 ```
 Create and initialize the database.
@@ -56,7 +58,7 @@ and sign up for an account. The information you enter will be stored on your loc
 1. Install Node and NPM
 	```
 	curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-	sudo apt-get install -y nodejs npm
+	sudo apt-get install -y nodejs
 	```
 
 2. Install BitGo Express
