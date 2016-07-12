@@ -1,32 +1,66 @@
+# import our config.ini which holds our (git-ignored) private information
+import configparser as cparse
+import os
+config = cparse.ConfigParser()
+# we are looking at email settings and admin
+config.add_section('admin')
+config.add_section('email settings')
+config.set('admin', 'secret_key', 'houdini')
+config.set('admin', 'admin_username', 'admin')
+config.set('admin', 'admin_password', 'password')
+config.set('admin', 'access_token', '')
+config.set('admin', 'default_admin', 'my_email@gmail.com')
+config.set('email settings', 'mail_username', 'myemailname')
+config.set('email settings', 'mail_server', 'smtp.googlemail.com')
+config.set('email settings', 'mail_password', 'myemailpassword')
+config.set('email settings', 'mail_port', '465')
+# Would be better to store this in a database
+config.set('admin', 'admins', 'masonicgit.21@gmail.com,barnard.martin@gmail.com')
+
+if os.path.exists('config.ini'):
+    config.read('config.ini')
+    print('*** read config.ini ***')
+else:
+    f=open('config.ini', 'w')
+    config.write(f)
+    f.close()
+    print("*** default config.ini created. You may want to edit it and put your own values in! ***")
+
+
+
+
 # DEBUG has to be to False in a production enrironment for security reasons
 DEBUG = True
 # BitGo wallet token for IP XX.XXX.XX, dispense an access token at www.bitgo.com and set it here
 
-ACCESS_TOKEN = ''
+ACCESS_TOKEN = config.get('admin', 'access_token')
 # Secret key for generating tokens
 
-SECRET_KEY = 'houdini'
+SECRET_KEY = config.get('admin', 'secret_key')
+
 
 # Admin credentials
-ADMIN_CREDENTIALS = ('admin', 'password')
+ADMIN_CREDENTIALS = (config.get('admin', 'admin_username'),  config.get('admin', 'admin_password'))
 
 # Database choice
 SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # Configuration of a Gmail account for sending mails
-MAIL_SERVER = 'smtp.googlemail.com'
-MAIL_PORT = 465
+MAIL_SERVER = config.get('email settings', 'mail_server')
+MAIL_PORT = config.getint('email settings', 'mail_port')
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
-MAIL_USERNAME = 'masonicgit.21'
-MAIL_PASSWORD = '21.co/learn'
-ADMINS = ['masonicgit.21@gmail.com']
+MAIL_USERNAME = config.get('email settings', 'mail_username')
+MAIL_PASSWORD = config.get('email settings', 'mail_password')
+# would be better to pull this from the database!
+ADMINS = config.get('admin', 'default_admin').split(',')
 
 # Number of times a password is hashed
 BCRYPT_LOG_ROUNDS = 12
 
 # Marketplace settings
+# TODO: automagically pull url from system
 MARKET_DATA = [{'name': 'quote',
                 'prettyName': 'Profound Quote',
                 'url': 'http://10.244.190.107:5000/quote',
@@ -36,6 +70,7 @@ MARKET_DATA = [{'name': 'quote',
 MARKETPLACE_API='' #http://10.244.34.100:21411/up-premium'
 
 # Bitcoin Tutorials
+# TODO: Automate a way of getting these
 TUTORIALS = [{'url': 'https://gist.github.com/pkrasam/d1aa82d5a70189d8f2ad',
               'name': 'gist.01_Build_a_Simple_Bitcoin_Game.md',
               'prettyName': 'Build a Simple Bitcoin Game',
