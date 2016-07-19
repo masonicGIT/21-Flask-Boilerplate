@@ -15,7 +15,7 @@ config.set('email settings', 'mail_server', 'smtp.googlemail.com')
 config.set('email settings', 'mail_password', 'myemailpassword')
 config.set('email settings', 'mail_port', '465')
 # Would be better to store this in a database
-config.set('admin', 'admins', 'masonicgit.21@gmail.com,barnard.martin@gmail.com')
+config.set('admin', 'admins', 'masonicgit.21@gmail.com,casey.oneill@gmail.com,barnard.martin@gmail.com')
 
 if os.path.exists('config.ini'):
     config.read('config.ini')
